@@ -1,0 +1,17 @@
+# Opcional: "Infraestructura como código" para Render (Blueprint).
+# El despliegue manual de la guía (11.2) no lo necesita.
+services:
+  - type: web
+    name: api-estudiantes-iesrfa
+    runtime: python
+    plan: free
+    branch: main
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: ENVIRONMENT
+        value: produccion
+      - key: MODO_DEBUG
+        value: "False"
+      - key: API_SECRET_KEY
+        sync: false   # se escribe a mano en el Dashboard, nunca en el repositorio

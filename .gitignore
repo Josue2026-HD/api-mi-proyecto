@@ -1,0 +1,7 @@
+# --- .gitignore esencial ---
+venv/
+__pycache__/
+*.pyc
+.env
+.pytest_cache/
+.vscode/

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Cliente Web de API en la Nube</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; padding: 25px; background: #f4f6f9; }
+    .card { background: white; padding: 20px; border-radius: 8px; max-width: 500px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    input { width: 100%; padding: 8px; margin-bottom: 10px; box-sizing: border-box; }
+    button { background: #2b6cb0; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; margin-right: 5px; }
+    button:hover { background: #1a365d; }
+    pre { background: #2d3748; color: #f7fafc; padding: 12px; border-radius: 5px; overflow-x: auto; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Consumo de API Cloud en Vivo</h2>
+    <label>URL base de tu API (sin / al final):</label>
+    <input id="urlBase" value="https://TU-API.onrender.com">
+    <p>Estado del Despliegue Continuo:</p>
+    <button onclick="consultarAPI('/version')">/version</button>
+    <button onclick="consultarAPI('/health')">/health</button>
+    <button onclick="consultarAPI('/tareas')">/tareas</button>
+    <h3>Respuesta del Servidor:</h3>
+    <pre id="resultado">Esperando consulta...</pre>
+  </div>
+
+  <script>
+    async function consultarAPI(ruta) {
+      const contenedor = document.getElementById('resultado');
+      const base = document.getElementById('urlBase').value.trim();
+      contenedor.textContent = 'Conectando con la nube... (el plan gratuito puede tardar ~50 s si estaba hibernando)';
+      try {
+        const respuesta = await fetch(base + ruta);
+        const datos = await respuesta.json();
+        contenedor.textContent = JSON.stringify(datos, null, 2);
+      } catch (error) {
+        contenedor.textContent = 'Error al conectar con la API: ' + error.message;
+      }
+    }
+  </script>
+</body>
+</html>
